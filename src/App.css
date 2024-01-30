@@ -1,0 +1,15 @@
+.cont {
+  padding: 2em;
+}
+
+table {
+  height: 200px;
+  overflow-y: scroll;
+}
+.single_res {
+  padding: 1em;
+  background-color: rgba(102, 244, 102, 0.616);
+  outline: 2px solid greenyellow;
+  border-radius: 5px;
+  margin: 1em;
+}
