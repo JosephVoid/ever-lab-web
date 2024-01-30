@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import axios from 'axios';
+import { getTests, uploadORU } from './api';
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -12,42 +12,37 @@ function App() {
     }
   };
 
-  const getMeasurements = () => {
-    axios.get((process.env.REACT_APP_BASE_URL as string)+"/getTests")
-    .then(res => {
-        setMeasure(res.data);
-    })
-  }
-
   const handleUpload = async () => {
-    var formData = new FormData();
-    formData.append("oru", file as File);
-    axios.post((process.env.REACT_APP_BASE_URL as string)+"/upload", formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
+    if (file && file.type === "text/plain"){
+      const res = await uploadORU(file as File)
+      if (res) {
+        let tests = await getTests();
+        if (tests)
+          setMeasure(tests);
       }
-    }).then(result => {
-      getMeasurements()
-    })
+    }
+    else alert("No file seleted or wrong type")
   };
   
   return (
     <div className='cont'>
-      <div className='left' style={{'width':'80%'}}>
+      <div className='left'>
         <div className='upload-section'>
           <h3>Upload ORU Text</h3>
-          <input type="file" name="oru" id="oru" onChange={handleFileChange}/>
+          <input className='input-field' type="file" name="oru" id="oru" onChange={handleFileChange}/>
           <button onClick={handleUpload}>Upload</button>
         </div>
         <h3>Result</h3>
         <div className='results'>
           {
             measure?.map((ms) => (
-              <div className='single_res'>
+              <div className={`single_res ${ms.test.risky ? 'risk': ''}`}>
                 <p><b>Patient</b>: {ms.person_name}</p>
+                <p><b>Test Code</b>: {ms.test.testCode}</p>
                 <p><b>Test</b>: {ms.test.testDescription}</p>
                 <p><b>Ideal Range</b>: {ms.test.low_met+" - "+ms.test.high_met}</p>
                 <p><b>Test result</b>: {ms.test.resultValue}</p>
+                <p><b>Risk Status</b>: {ms.test.risky ? 'Risky' : 'No Risk'}</p>
               </div>
             ))
           }
