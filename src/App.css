@@ -6,10 +6,58 @@ table {
   height: 200px;
   overflow-y: scroll;
 }
+.results {
+  display: flex;
+  flex-wrap: wrap;
+}
 .single_res {
   padding: 1em;
   background-color: rgba(102, 244, 102, 0.616);
   outline: 2px solid greenyellow;
   border-radius: 5px;
   margin: 1em;
+}
+.risk {
+  background-color: rgba(249, 80, 80, 0.658) !important;
+  outline: 2px solid crimson;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #3498db;
+  color: #ffffff;
+  background-color: #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+  color: #ffffff;
+}
+
+button:active {
+  background-color: #1f618d;
+  border-color: #1f618d;
+  color: #ffffff;
+}
+
+.input-field {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #2980b9;
+  outline: none; /* Remove default focus outline for better aesthetics */
 }
